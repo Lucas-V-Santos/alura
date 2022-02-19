@@ -7,23 +7,16 @@ def play():
     secret_word = load_secret_word()
     correct_letters = inicialize_correct_letters(secret_word)
 
-    correct_letters = ["_" for letter in secret_word]
     hanged = False
     got_in_right = False
     errors = 0
 
-    print(correct_letters)
+    print("A Sombra da Palavra Secreta é: \n {} \n com {} letras".format(correct_letters, len(correct_letters)))
 
     while(not hanged and not got_in_right):
-        guess = input("Enter your guess here: ")
-        guess = guess.strip().upper()
+        guess = ask_for_guess()
         if(guess in secret_word):
-            index = 0
-            for letter in secret_word:
-                if(letter == guess):
-                    #print("{} was fouund in position {}".format(guess, (index+1)))
-                    correct_letters[index] = guess.upper()
-                index += 1
+            mark_correct_letter(secret_word, guess, correct_letters)
         else:
             errors += 1
         hanged = errors == 6
@@ -36,10 +29,9 @@ def play():
             print("Você acertou! Restam {} tentativas para acertar {} letras.".format((6 - errors), correct_letters.count("_")))
 
     if(got_in_right):
-        print(":) Você Venceu o Jogo!")
+        print_winner_message()
     else:
-        print(":( Boa Sorte na Próxima!")
-    print("Fim do Jogo")
+        print_loser_message()
 
 def print_opening_file():
     print("**********************************")
@@ -61,6 +53,21 @@ def inicialize_correct_letters(secret_word):
     correct_letters = ["_" for letter in secret_word]
     return correct_letters
 
+def ask_for_guess():
+    guess = input("Enter your guess here: ")
+    return guess.strip().upper()
+
+def mark_correct_letter(secret_word, guess, correct_letters):
+    index = 0
+    for letter in secret_word:
+        if (letter == guess):
+            correct_letters[index] = guess.upper()
+        index += 1
+def print_winner_message():
+    print("Aí sim! Você venceu o jogo. :)")
+
+def print_loser_message():
+    print("Ahh! Mais sorte da próxima vez. :(")
 
 if(__name__ == "__main__"):
     play()
