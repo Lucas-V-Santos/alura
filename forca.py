@@ -2,36 +2,34 @@ from builtins import set
 import random
 
 def play():
-
     print_opening_file()
     secret_word = load_secret_word()
     correct_letters = inicialize_correct_letters(secret_word)
-
     hanged = False
     got_in_right = False
     errors = 0
-
     print("A Sombra da Palavra Secreta é: \n {} \n com {} letras".format(correct_letters, len(correct_letters)))
 
     while(not hanged and not got_in_right):
         guess = ask_for_guess()
         if(guess in secret_word):
             mark_correct_letter(secret_word, guess, correct_letters)
+            print("Você acertou! Restam {} tentativas para acertar {} letras.".format((7 - errors),correct_letters.count("_")))
         else:
             errors += 1
-        hanged = errors == 6
+            print("Você errou! Restam {} tentativas para acertar {} letras.".format((7 - errors),correct_letters.count("_")))
+            draw_hang(errors)
+
+        hanged = errors == 7
         got_in_right = "_" not in correct_letters
 
         print(correct_letters)
-        if(guess in secret_word):
-            print("Você acertou! Restam {} tentativas para acertar {} letras.".format((6-errors), correct_letters.count("_")))
-        else:
-            print("Você acertou! Restam {} tentativas para acertar {} letras.".format((6 - errors), correct_letters.count("_")))
+
 
     if(got_in_right):
         print_winner_message()
     else:
-        print_loser_message()
+        print_loser_message(secret_word)
 
 def print_opening_file():
     print("**********************************")
@@ -64,10 +62,87 @@ def mark_correct_letter(secret_word, guess, correct_letters):
             correct_letters[index] = guess.upper()
         index += 1
 def print_winner_message():
-    print("Aí sim! Você venceu o jogo. :)")
+    print("Parabéns, você ganhou!")
+    print("       ___________      ")
+    print("      '._==_==_=_.'     ")
+    print("      .-\\:      /-.    ")
+    print("     | (|:.     |) |    ")
+    print("      '-|:.     |-'     ")
+    print("        \\::.    /      ")
+    print("         '::. .'        ")
+    print("           ) (          ")
+    print("         _.' '._        ")
+    print("        '-------'       ")
 
-def print_loser_message():
-    print("Ahh! Mais sorte da próxima vez. :(")
+def print_loser_message(secret_word):
+    print("Puxa, você foi enforcado!")
+    print("A palavra era {}".format(secret_word))
+    print("    _______________         ")
+    print("   /               \       ")
+    print("  /                 \      ")
+    print("//                   \/\  ")
+    print("\|   XXXX     XXXX   | /   ")
+    print(" |   XXXX     XXXX   |/     ")
+    print(" |   XXX       XXX   |      ")
+    print(" |                   |      ")
+    print(" \__      XXX      __/     ")
+    print("   |\     XXX     /|       ")
+    print("   | |           | |        ")
+    print("   | I I I I I I I |        ")
+    print("   |  I I I I I I  |        ")
+    print("   \_             _/       ")
+    print("     \_         _/         ")
+    print("       \_______/           ")
+
+def draw_hang(erros):
+    print("  _______     ")
+    print(" |/      |    ")
+
+    if(erros == 1):
+        print(" |      (_)   ")
+        print(" |            ")
+        print(" |            ")
+        print(" |            ")
+
+    if(erros == 2):
+        print(" |      (_)   ")
+        print(" |      \     ")
+        print(" |            ")
+        print(" |            ")
+
+    if(erros == 3):
+        print(" |      (_)   ")
+        print(" |      \|    ")
+        print(" |            ")
+        print(" |            ")
+
+    if(erros == 4):
+        print(" |      (_)   ")
+        print(" |      \|/   ")
+        print(" |            ")
+        print(" |            ")
+
+    if(erros == 5):
+        print(" |      (_)   ")
+        print(" |      \|/   ")
+        print(" |       |    ")
+        print(" |            ")
+
+    if(erros == 6):
+        print(" |      (_)   ")
+        print(" |      \|/   ")
+        print(" |       |    ")
+        print(" |      /     ")
+
+    if (erros == 7):
+        print(" |      (_)   ")
+        print(" |      \|/   ")
+        print(" |       |    ")
+        print(" |      / \   ")
+
+        print(" |            ")
+        print("_|___         ")
+        print()
 
 if(__name__ == "__main__"):
     play()
