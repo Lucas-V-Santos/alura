@@ -1,4 +1,5 @@
 from builtins import set
+import random
 
 
 def play():
@@ -6,7 +7,17 @@ def play():
     print("   Welcome to the Hanged Game   ")
     print("**********************************")
 
-    secret_word  = "maça".upper()
+    archieve = open("palavras.txt", "r")
+    words = []
+
+    for line in archieve:
+        line = line.strip()
+        words.append(line)
+
+    archieve.close()
+    number = random.randrange(0, len(words))
+
+    secret_word  = words[number].upper()
     correct_letters = ["_" for letter in secret_word]
     hanged = False
     got_in_right = False
